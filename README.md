@@ -78,6 +78,7 @@ Utilisateur ou agent
         |
         v
      Ressource
+```
 
 La présence ou l'absence d'une fonctionnalité dans le frontend n'a pas à déterminer si une opération est autorisée.
 
