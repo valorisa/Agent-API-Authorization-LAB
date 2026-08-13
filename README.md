@@ -87,7 +87,7 @@ docs/images/
 
 Arborescence prévue :
 
-```
+```text
 docs/
 └── images/
     ├── 01-agent-result.jpg
@@ -105,13 +105,13 @@ Le message indique notamment que createReservation et joinWaitlist disposent de 
 
 La deuxième capture montre une requête de type :
 
-```
+```text
 DELETE /api/v1/reservations/<objet-d-un-autre-utilisateur>
 ```
 
 L'interface de démonstration indique que le contrôle d'autorisation est absent et que l'API renvoie :
 
-```
+```text
 200 OK
 reservation cancelled
 ```
@@ -124,13 +124,13 @@ La troisième capture montre le comportement attendu après correction.
 
 Le serveur détecte que :
 
-```
+```text
 session connectée != propriétaire de l'enregistrement
 ```
 
 et refuse l'opération avec :
 
-```
+```text
 403 Forbidden
 ```
 
@@ -146,7 +146,7 @@ Le problème apparaît lorsqu'un client peut fournir ou manipuler l'identifiant 
 
 Exemple conceptuel :
 
-```
+```text
 Utilisateur A
     |
     | session valide
@@ -168,7 +168,7 @@ Le fait que la session soit valide ne signifie donc pas que l'opération est aut
 
 La vérification correcte doit aller jusqu'à l'objet ciblé :
 
-```
+```text
 Utilisateur A
     |
     v
@@ -213,7 +213,7 @@ Supposons que l'application affiche uniquement les réservations appartenant à 
 
 Cela ne garantit rien si l'API accepte directement :
 
-```
+```text
 DELETE /api/v1/reservations/<id>
 ```
 
@@ -257,7 +257,7 @@ Le changement étudié par ce projet est donc moins l'apparition d'une nouvelle 
 
 Le projet distingue explicitement plusieurs couches :
 
-```
+```text
 +-----------------------------+
 | Modèle de langage           |
 +-----------------------------+
@@ -316,7 +316,7 @@ Le laboratoire sera volontairement local.
 
 Une architecture minimale pourra être organisée ainsi :
 
-```
+```text
 Termux / Android
     |
     +-- projet Git
@@ -348,7 +348,7 @@ L'endpoint d'annulation ne vérifie pas le propriétaire de la réservation.
 
 Le test de laboratoire doit alors démontrer :
 
-```
+```text
 Utilisateur A
     |
     v
@@ -366,7 +366,7 @@ Le même endpoint vérifie l'autorisation au niveau de l'objet.
 
 Le test doit démontrer :
 
-```
+```text
 Utilisateur A
     |
     v
@@ -442,7 +442,7 @@ Le laboratoire est considéré comme correctement construit lorsque les tests pe
 
 VERSION VULNÉRABLE
 
-```
+```text
 session A
     |
     +--> objet B
@@ -455,7 +455,7 @@ session A
 
 VERSION CORRIGÉE
 
-```
+```text
 session A
     |
     +--> objet B
@@ -505,13 +505,13 @@ Le développement initial est prévu sous Termux sur Android.
 
 Répertoire de travail de référence :
 
-```
+```text
 ~/Projets
 ```
 
 Chemin absolu observé :
 
-```
+```text
 /data/data/com.termux/files/home/Projets
 ```
 
@@ -521,7 +521,7 @@ Le projet doit rester compatible avec un environnement Linux minimal afin de fac
 
 L'arborescence initiale envisagée est la suivante :
 
-```
+```text
 agent-api-authorization-lab/
 ├── README.md
 ├── LICENSE
