@@ -33,21 +33,21 @@ permettant de comprendre le problème, de l'observer et de vérifier le correcti
 Le laboratoire poursuit plusieurs objectifs complémentaires :
 
 - comprendre pourquoi l'interface utilisateur ne constitue pas une
-frontière de sécurité ;
+  frontière de sécurité ;
 - distinguer authentification et autorisation ;
 - comprendre le principe de l'autorisation au niveau de l'objet ;
 - reproduire localement une API volontairement vulnérable ;
 - montrer comment une requête directe peut contourner une restriction
-uniquement présente dans le frontend ;
+  uniquement présente dans le frontend ;
 - observer la différence entre une opération autorisée et une opération
-refusée ;
+  refusée ;
 - mesurer l'impact d'une action irréversible ;
 - implémenter le contrôle d'autorisation côté serveur ;
 - vérifier que le correctif bloque effectivement l'accès à l'objet d'un
-autre utilisateur ;
+  autre utilisateur ;
 - étudier le rôle spécifique d'un agent logiciel capable d'explorer une API ;
 - distinguer la capacité du modèle de la capacité opérationnelle de
-l'ensemble agent, outils, identité et permissions.
+  l'ensemble agent, outils, identité et permissions.
 
 ## Principe central
 
@@ -215,6 +215,8 @@ L'authentification répond à la question :
 
 > Qui êtes-vous ?
 
+
+
 Une session peut donc être parfaitement valide.
 
 Autorisation
@@ -222,6 +224,8 @@ Autorisation
 L'autorisation répond à la question :
 
 > Avez-vous le droit d'effectuer cette opération sur cet objet ?
+
+
 
 Ces deux contrôles sont différents.
 
@@ -273,19 +277,28 @@ Un agent disposant d'outils adaptés peut être capable de :
 
 1. observer l'application ;
 
+
 2. identifier des opérations disponibles ;
+
 
 3. comprendre la structure des requêtes ;
 
+
 4. identifier des identifiants d'objets ;
+
 
 5. tester des variantes ;
 
+
 6. observer les réponses ;
+
 
 7. formuler une nouvelle hypothèse ;
 
+
 8. poursuivre son exploration.
+
+
 
 Le changement étudié par ce projet est donc moins l'apparition d'une nouvelle vulnérabilité que la réduction du coût nécessaire pour découvrir et exploiter certaines vulnérabilités existantes.
 
@@ -342,6 +355,7 @@ les validations humaines exigées ;
 
 les limites imposées par le harness.
 
+
 Action irréversible et contrôle humain
 
 L'incident de référence comporte une propriété aggravante :
@@ -359,6 +373,7 @@ lecture sans effet durable ;
 modification réversible ;
 
 modification irréversible ou difficilement réversible.
+
 
 Plus une action est irréversible, plus le système doit imposer des garanties fortes avant son exécution.
 
@@ -500,7 +515,7 @@ Critère de réussite
 
 Le laboratoire est considéré comme correctement construit lorsque les tests permettent de démontrer sans ambiguïté les deux situations suivantes :
 
-VERSION VULNÉRABLE
+Version vulnérable
 
 session A
     |
@@ -511,7 +526,7 @@ session A
     `--> 200 OK
          objet B modifié
 
-VERSION CORRIGÉE
+Version corrigée
 
 session A
     |
@@ -546,7 +561,10 @@ aucune modification n'est réalisée avant le contrôle ;
 
 les autres endpoints conservent leur comportement attendu.
 
+
 > Une correction automatisée n'est pas une validation.
+
+
 
 Sécurité du laboratoire
 
@@ -567,6 +585,7 @@ conserver les expériences dans l'environnement local ;
 journaliser les changements importants ;
 
 privilégier les tests automatisés et reproductibles.
+
 
 Le fait qu'une API réelle semble accepter une opération ne constitue jamais une autorisation à l'exécuter.
 
@@ -625,6 +644,7 @@ des tests d'autorisation ;
 
 une documentation de l'expérience.
 
+
 Une version ultérieure pourra ajouter :
 
 un harness agentique ;
@@ -642,6 +662,7 @@ une comparaison entre exécution humaine et exécution agentique ;
 une analyse des actions irréversibles ;
 
 des contrôles de validation humaine.
+
 
 Questions de recherche
 
@@ -691,9 +712,12 @@ un contrôle humain peut remplacer l'autorisation serveur ;
 
 un modèle particulier est nécessaire pour reproduire le phénomène.
 
+
 L'objectif est plus précis :
 
 > Étudier expérimentalement comment une faiblesse d'autorisation préexistante peut devenir plus facilement exploitable lorsqu'un agent logiciel est capable d'explorer et d'utiliser directement une API.
+
+
 
 Terminologie
 
@@ -717,70 +741,4 @@ Broken Object Level Authorization. Défaut d'autorisation permettant à un sujet
 
 BFLA
 
-Broken Function Level Authorization. Défaut d'autorisation concernant l'accès à une fonction ou à une opération qui devrait être réservée à certains utilisateurs ou rôles.
-
-Frontend
-
-Partie de l'application destinée à l'interaction avec l'utilisateur.
-
-Backend
-
-Partie serveur qui applique notamment les règles métier, les contrôles d'accès et les modifications de l'état.
-
-Agent
-
-Système logiciel capable d'observer un environnement, de décider d'actions et d'utiliser des outils pour atteindre un objectif.
-
-LLM
-
-Large Language Model. Modèle de langage utilisé ici comme composant cognitif éventuel d'un agent.
-
-Harness
-
-Cadre logiciel qui relie le modèle à son environnement, à ses outils, à son état, à ses permissions et à sa boucle d'exécution.
-
-Positionnement du projet
-
-Le projet part d'un constat simple :
-
-> Une API doit considérer toute requête comme une opération potentiellement directe, indépendamment de l'interface qui était prévue pour l'appeler.
-
-Cette règle était déjà valable avant l'arrivée des agents.
-
-Les agents rendent cependant cette propriété beaucoup plus visible, car ils peuvent interagir directement avec les interfaces machine et automatiser des séquences d'exploration qui étaient auparavant coûteuses pour un humain.
-
-La réponse défensive n'est donc pas de rendre les API plus difficiles à comprendre.
-
-La réponse est de rendre leurs règles d'autorisation correctes, explicites, systématiques et vérifiables côté serveur.
-
-Références
-
-Le projet s'appuie notamment sur les concepts de sécurité des API documentés par OWASP, en particulier les travaux consacrés à l'autorisation au niveau de l'objet.
-
-Les références précises utilisées pour chaque expérimentation seront conservées dans la documentation du projet afin de distinguer clairement :
-
-les faits rapportés ;
-
-les observations réalisées dans le laboratoire ;
-
-les hypothèses ;
-
-les interprétations ;
-
-les résultats expérimentaux.
-
-Statut du projet
-
-Le projet est actuellement au stade de cadrage.
-
-Le scénario de référence, les invariants et l'objectif pédagogique sont définis.
-
-La prochaine étape consiste à figer l'environnement expérimental avant d'implémenter l'API locale, puis à construire séparément la version vulnérable et la version corrigée.
-
-Aucune conclusion sur les performances ou les capacités réelles d'un agent ne sera tirée avant l'obtention de résultats reproductibles.
-
-Licence
-
-La licence du projet sera définie lors de la création du dépôt.
-
-Le code et les scénarios expérimentaux devront rester utilisables dans un cadre légal, local et autorisé.
+Broken Function Level Authorization. Défaut d'autorisa
