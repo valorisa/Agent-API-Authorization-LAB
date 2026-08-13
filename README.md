@@ -95,13 +95,13 @@ docs/
     └── 03-fixed-api.jpg
 ```
 
-1. Résultat observé par l'agent
+1a. Résultat observé par l'agent
 
 La première capture montre l'agent après l'opération. Il constate qu'il ne peut pas restaurer l'utilisateur supprimé de la liste d'attente.
 
 Le message indique notamment que createReservation et joinWaitlist disposent de contrôles d'autorisation alors que cancelReservation en est dépourvu. Le point important n'est donc pas une absence générale de sécurité, mais une incohérence entre plusieurs endpoints.
 
-2. Requête acceptée sans contrôle d'autorisation
+1b. Requête acceptée sans contrôle d'autorisation
 
 La deuxième capture montre une requête de type :
 
@@ -118,7 +118,7 @@ reservation cancelled
 
 Le laboratoire reproduira ce comportement uniquement sur une API locale et volontairement vulnérable.
 
-3. Même requête après correction
+1c. Même requête après correction
 
 La troisième capture montre le comportement attendu après correction.
 
